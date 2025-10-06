@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2 Flyers: A Day at the City Farm</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Study -->
+    <!-- Application Structure Plan: The SPA uses a task-oriented, three-section structure: 1) Read Story, 2) Do Exercise, 3) See Results. This linear flow guides the user through the learning activity logically. The key interaction is the 'Check Answers' button, which provides instant, color-coded feedback for each question and a summary score, transforming a static exercise into an engaging, interactive learning tool. This is more effective for A2 learners than a simple static answer key. -->
+    <!-- Visualization & Content Choices: Story -> Goal: Inform -> Method: Clean text block -> Justification: Readability. Questions -> Goal: Interact -> Method: HTML form with text inputs -> Justification: Standard way for fill-in-the-blanks. Feedback -> Goal: Compare/Inform -> Method: JS-driven dynamic styling (color-coded borders, Unicode icons ✔/❌) and text updates -> Justification: Provides immediate, clear, and encouraging feedback on user performance, which is crucial for language learning. No charts are needed; structured HTML/CSS provides the necessary visual organization. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF6;
+            color: #4A4A4A;
+        }
+        .correct-answer {
+            border-color: #28a745;
+        }
+        .incorrect-answer {
+            border-color: #dc3545;
+        }
+        .feedback-icon {
+            font-size: 1.25rem;
+            margin-left: 0.5rem;
+        }
+        .correct-icon {
+            color: #28a745;
+        }
+        .incorrect-icon {
+            color: #dc3545;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container mx-auto p-4 md:p-8 max-w-3xl">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">A2 Flyers Reading Comprehension Exercise</h1>
+            <p class="text-lg text-gray-600 mt-2">A Day at the City Farm</p>
+        </header>
+
+        <main>
+            <section id="story" class="bg-white rounded-xl shadow-lg p-6 md:p-8 mb-8 transition-all duration-300 hover:shadow-xl">
+                <h2 class="text-2xl font-bold text-gray-700 mb-4 flex items-center">
+                    <span class="text-2xl mr-3">📖</span>
+                    Read the Story
+                </h2>
+                <div class="space-y-4 text-gray-700 leading-relaxed">
+                    <p>Last Saturday, Tom and his family went to visit a city farm. Tom’s mother often takes him to the country to see animals, but the city farm was much nearer. They went there by underground and then walked for ten minutes.</p>
+                    <p>The farm was very busy. Tom and his sister, Jane, first went to look at the chickens and the big white ducks. Jane liked the little brown chicks best. Tom’s dad bought some food for them, and the children enjoyed giving the food to all the animals. Then, they saw a very large cow. It was lying down and eating grass in the field.</p>
+                    <p>Later, they went to the farm shop, which sold eggs and vegetables. Tom’s mother bought some beautiful, red tomatoes and Jane chose a cake that looked like a rabbit. “What a wonderful day!” Tom said to his dad. “I love seeing all the animals here in the city!”</p>
+                </div>
+            </section>
+
+            <section id="exercise" class="bg-white rounded-xl shadow-lg p-6 md:p-8 transition-all duration-300 hover:shadow-xl">
+                <h2 class="text-2xl font-bold text-gray-700 mb-6 flex items-center">
+                    <span class="text-2xl mr-3">✏️</span>
+                    Complete the Sentences
+                </h2>
+                <div class="space-y-5">
+                    <div class="question-container">
+                        <label for="q1" class="block text-gray-700 mb-1">1. The farm was much <strong class="text-blue-600">____________</strong> than going to the country.</label>
+                        <div class="flex items-center">
+                            <input type="text" id="q1" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                            <span id="feedback-q1" class="feedback-icon"></span>
+                        </div>
+                         <p id="solution-q1" class="text-sm text-green-600 mt-1 hidden"></p>
+                    </div>
+                     <div class="question-container">
+                        <label for="q2" class="block text-gray-700 mb-1">2. The walk from the underground station to the farm took <strong class="text-blue-600">____________</strong>.</label>
+                        <div class="flex items-center">
+                            <input type="text" id="q2" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                             <span id="feedback-q2" class="feedback-icon"></span>
+                        </div>
+                        <p id="solution-q2" class="text-sm text-green-600 mt-1 hidden"></p>
+                    </div>
+                    <div class="question-container">
+                        <label for="q3" class="block text-gray-700 mb-1">3. Tom and Jane looked at the <strong class="text-blue-600">____________</strong> first.</label>
+                        <div class="flex items-center">
+                            <input type="text" id="q3" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                            <span id="feedback-q3" class="feedback-icon"></span>
+                        </div>
+                         <p id="solution-q3" class="text-sm text-green-600 mt-1 hidden"></p>
+                    </div>
+                    <div class="question-container">
+                        <label for="q4" class="block text-gray-700 mb-1">4. Jane thought the <strong class="text-blue-600">____________</strong> were the nicest animals there.</label>
+                        <div class="flex items-center">
+                            <input type="text" id="q4" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                             <span id="feedback-q4" class="feedback-icon"></span>
+                        </div>
+                        <p id="solution-q4" class="text-sm text-green-600 mt-1 hidden"></p>
+                    </div>
+                     <div class="question-container">
+                        <label for="q5" class="block text-gray-700 mb-1">5. Tom and Jane enjoyed <strong class="text-blue-600">____________</strong> to the animals.</label>
+                        <div class="flex items-center">
+                            <input type="text" id="q5" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                            <span id="feedback-q5" class="feedback-icon"></span>
+                        </div>
+                        <p id="solution-q5" class="text-sm text-green-600 mt-1 hidden"></p>
+                    </div>
+                    <div class="question-container">
+                        <label for="q6" class="block text-gray-700 mb-1">6. The large cow was eating <strong class="text-blue-600">____________</strong> in the field.</label>
+                        <div class="flex items-center">
+                            <input type="text" id="q6" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                            <span id="feedback-q6" class="feedback-icon"></span>
+                        </div>
+                        <p id="solution-q6" class="text-sm text-green-600 mt-1 hidden"></p>
+                    </div>
+                    <div class="question-container">
+                        <label for="q7" class="block text-gray-700 mb-1">7. Tom’s mother bought some <strong class="text-blue-600">____________</strong> from the farm shop.</label>
+                        <div class="flex items-center">
+                            <input type="text" id="q7" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                            <span id="feedback-q7" class="feedback-icon"></span>
+                        </div>
+                        <p id="solution-q7" class="text-sm text-green-600 mt-1 hidden"></p>
+                    </div>
+                </div>
+
+                <div id="results-summary" class="mt-8 text-center text-lg font-medium hidden p-4 rounded-lg"></div>
+
+                <div class="mt-8 flex justify-center space-x-4">
+                    <button id="checkAnswersBtn" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all transform hover:scale-105">
+                        Check Answers
+                    </button>
+                    <button id="tryAgainBtn" class="bg-gray-500 text-white font-bold py-3 px-8 rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-300 transition-all transform hover:scale-105 hidden">
+                        Try Again
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const solutions = [
+                { id: 'q1', answers: ['nearer'] },
+                { id: 'q2', answers: ['ten minutes'] },
+                { id: 'q3', answers: ['chickens', 'the chickens', 'chickens and ducks', 'the chickens and the big white ducks', 'chickens and the big white ducks'] },
+                { id: 'q4', answers: ['little brown chicks', 'the little brown chicks'] },
+                { id: 'q5', answers: ['giving the food', 'giving food'] },
+                { id: 'q6', answers: ['grass'] },
+                { id: 'q7', answers: ['beautiful, red tomatoes', 'red tomatoes', 'tomatoes'] }
+            ];
+
+            const checkBtn = document.getElementById('checkAnswersBtn');
+            const tryAgainBtn = document.getElementById('tryAgainBtn');
+            const resultsSummary = document.getElementById('results-summary');
+
+            const checkAnswers = () => {
+                let score = 0;
+                let allAnswered = true;
+
+                solutions.forEach(solution => {
+                    const inputElement = document.getElementById(solution.id);
+                    const feedbackElement = document.getElementById(`feedback-${solution.id}`);
+                    const solutionElement = document.getElementById(`solution-${solution.id}`);
+                    const userAnswer = inputElement.value.trim().toLowerCase().replace(/[.,!?;:]/g, '');
+
+                    if (userAnswer === '') {
+                        allAnswered = false;
+                    }
+
+                    const isCorrect = solution.answers.includes(userAnswer);
+
+                    inputElement.classList.remove('correct-answer', 'incorrect-answer');
+                    feedbackElement.classList.remove('correct-icon', 'incorrect-icon');
+                    feedbackElement.textContent = '';
+                    solutionElement.classList.add('hidden');
+                    
+                    if (isCorrect) {
+                        score++;
+                        inputElement.classList.add('correct-answer');
+                        feedbackElement.textContent = '✔';
+                        feedbackElement.classList.add('correct-icon');
+                    } else {
+                        inputElement.classList.add('incorrect-answer');
+                        feedbackElement.textContent = '❌';
+                        feedbackElement.classList.add('incorrect-icon');
+                        solutionElement.textContent = `Correct Answer: ${solution.answers[0]}`;
+                        solutionElement.classList.remove('hidden');
+                    }
+                    inputElement.disabled = true;
+                });
+                
+                resultsSummary.textContent = `You answered ${score}/${solutions.length} questions correctly!`;
+                if (score === solutions.length) {
+                    resultsSummary.className = 'mt-8 text-center text-lg font-medium p-4 rounded-lg bg-green-100 text-green-800';
+                } else {
+                     resultsSummary.className = 'mt-8 text-center text-lg font-medium p-4 rounded-lg bg-yellow-100 text-yellow-800';
+                }
+                resultsSummary.classList.remove('hidden');
+
+                checkBtn.classList.add('hidden');
+                tryAgainBtn.classList.remove('hidden');
+            };
+            
+            const resetExercise = () => {
+                 solutions.forEach(solution => {
+                    const inputElement = document.getElementById(solution.id);
+                    const feedbackElement = document.getElementById(`feedback-${solution.id}`);
+                    const solutionElement = document.getElementById(`solution-${solution.id}`);
+
+                    inputElement.value = '';
+                    inputElement.disabled = false;
+                    inputElement.classList.remove('correct-answer', 'incorrect-answer');
+                    
+                    feedbackElement.textContent = '';
+                    feedbackElement.classList.remove('correct-icon', 'incorrect-icon');
+                    
+                    solutionElement.classList.add('hidden');
+                    solutionElement.textContent = '';
+                });
+
+                resultsSummary.classList.add('hidden');
+                resultsSummary.textContent = '';
+                
+                checkBtn.classList.remove('hidden');
+                tryAgainBtn.classList.add('hidden');
+            };
+
+            checkBtn.addEventListener('click', checkAnswers);
+            tryAgainBtn.addEventListener('click', resetExercise);
+        });
+    </script>
+</body>
+</html>
